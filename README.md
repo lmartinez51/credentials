@@ -41,10 +41,11 @@ AIBridge is a high-performance Flutter application designed for the seamless con
 
 ## 📐 Architecture Overview
 
-AIBridge follows a reactive stream-based architecture:
-- **Scanner**: Listens to BLE broadcast streams, decoding manufacturer data to identify valid hardware.
-- **Connector**: Manages the lifecycle of the GATT connection with auto-reconnect logic.
-- **Writer**: Handles MTU negotiation and character-encoding for reliable data transmission.
+AIBridge follows a decoupled, reactive architecture designed for maintainability and scalability:
+- **Service Layer (`BleService`)**: Centralizes all BLE logic, handling scanning, GATT connection lifecycles, MTU negotiation, and reactive streams.
+- **UI Layer (`HomeScreen`, `AppTheme`)**: A highly modularized user interface that observes state changes from the service layer, avoiding excessive `setState` rebuilds.
+- **Configuration (`ble_constants.dart`)**: Hardcoded identifiers and UUIDs are extracted into a dedicated constants file for cleaner management.
+- **Build System**: Android build configurations have been modernized to use Kotlin DSL (KTS) for improved type safety and maintainability.
 
 ---
 
