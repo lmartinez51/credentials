@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -766,7 +764,10 @@ class _WifiConfigPageState extends State<WifiConfigPage>
 
         // Esperar solo para el segundo mensaje
         Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) _showSnackBar('Puedes buscar dispositivos nuevamente.', isError: false);
+          if (mounted) {
+            _showSnackBar('Puedes buscar dispositivos nuevamente.',
+                isError: false);
+          }
         });
       }
     } on TimeoutException {
@@ -784,7 +785,10 @@ class _WifiConfigPageState extends State<WifiConfigPage>
         _resetConnectionState();
 
         Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) _showSnackBar('Puedes buscar dispositivos nuevamente.', isError: false);
+          if (mounted) {
+            _showSnackBar('Puedes buscar dispositivos nuevamente.',
+                isError: false);
+          }
         });
       }
     } catch (e) {
@@ -807,13 +811,15 @@ class _WifiConfigPageState extends State<WifiConfigPage>
           _resetConnectionState();
 
           Future.delayed(const Duration(seconds: 2), () {
-            if (mounted) _showSnackBar('Puedes buscar dispositivos nuevamente.', isError: false);
+            if (mounted) {
+              _showSnackBar('Puedes buscar dispositivos nuevamente.',
+                  isError: false);
+            }
           });
         }
       }
     }
   }
-
 
   void sendApiKeyCommand() async {
     if (!isApiKeyFormValid) {
@@ -825,11 +831,21 @@ class _WifiConfigPageState extends State<WifiConfigPage>
     setState(() => isSendingApiKey = true);
 
     try {
+      try {
+        final negotiatedMtu = await flutterReactiveBle.requestMtu(
+          deviceId: _apiKeyChar!.deviceId,
+          mtu: 247,
+        );
+        debugPrint('📡 MTU negociado para API Key: $negotiatedMtu bytes');
+      } catch (e) {
+        debugPrint('⚠️ No se pudo negociar MTU para API Key: $e');
+      }
+
       final apiKey = apiKeyController.text.trim();
 
       debugPrint('📤 Enviando API Key (${apiKey.length} caracteres)');
 
-      await flutterReactiveBle.writeCharacteristicWithoutResponse(
+      await flutterReactiveBle.writeCharacteristicWithResponse(
         _apiKeyChar!,
         value: utf8.encode(apiKey),
       );
@@ -848,7 +864,10 @@ class _WifiConfigPageState extends State<WifiConfigPage>
         _resetConnectionState();
 
         Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) _showSnackBar('Puedes buscar dispositivos nuevamente.', isError: false);
+          if (mounted) {
+            _showSnackBar('Puedes buscar dispositivos nuevamente.',
+                isError: false);
+          }
         });
       }
     } on TimeoutException {
@@ -864,7 +883,10 @@ class _WifiConfigPageState extends State<WifiConfigPage>
         _resetConnectionState();
 
         Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) _showSnackBar('Puedes buscar dispositivos nuevamente.', isError: false);
+          if (mounted) {
+            _showSnackBar('Puedes buscar dispositivos nuevamente.',
+                isError: false);
+          }
         });
       }
     } catch (e) {
@@ -885,12 +907,16 @@ class _WifiConfigPageState extends State<WifiConfigPage>
           _resetConnectionState();
 
           Future.delayed(const Duration(seconds: 2), () {
-            if (mounted) _showSnackBar('Puedes buscar dispositivos nuevamente.', isError: false);
+            if (mounted) {
+              _showSnackBar('Puedes buscar dispositivos nuevamente.',
+                  isError: false);
+            }
           });
         }
       }
     }
   }
+
   void sendEraseNvsCommand() async {
     if (!mounted) return;
 
@@ -946,7 +972,10 @@ class _WifiConfigPageState extends State<WifiConfigPage>
         _resetConnectionState();
 
         Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) _showSnackBar('Puedes configurar el dispositivo nuevamente.', isError: false);
+          if (mounted) {
+            _showSnackBar('Puedes configurar el dispositivo nuevamente.',
+                isError: false);
+          }
         });
       }
     } on TimeoutException {
@@ -962,7 +991,10 @@ class _WifiConfigPageState extends State<WifiConfigPage>
         _resetConnectionState();
 
         Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) _showSnackBar('Puedes configurar el dispositivo nuevamente.', isError: false);
+          if (mounted) {
+            _showSnackBar('Puedes configurar el dispositivo nuevamente.',
+                isError: false);
+          }
         });
       }
     } catch (e) {
@@ -983,7 +1015,10 @@ class _WifiConfigPageState extends State<WifiConfigPage>
           _resetConnectionState();
 
           Future.delayed(const Duration(seconds: 2), () {
-            if (mounted) _showSnackBar('Puedes configurar el dispositivo nuevamente.', isError: false);
+            if (mounted) {
+              _showSnackBar('Puedes configurar el dispositivo nuevamente.',
+                  isError: false);
+            }
           });
         }
       }
