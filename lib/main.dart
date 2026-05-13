@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           contentPadding:
               const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: const Color(0xFF1A1A1A),
           elevation: 8,
           shape: RoundedRectangleBorder(
